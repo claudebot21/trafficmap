@@ -26,8 +26,8 @@ export default function TrafficMapApp() {
   const [images, setImages] = useState<Image[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [viewMode, setViewMode] = useState<string>("grid");
   const [galleryIndex, setGalleryIndex] = useState<number | null>(null);
 
   useEffect(() => {
@@ -110,7 +110,7 @@ export default function TrafficMapApp() {
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => setSelectedDate(null)}
+                onClick={() => setSelectedDate(undefined)}
                 aria-label="Clear date filter"
               >
                 <X className="h-4 w-4" />
@@ -121,10 +121,7 @@ export default function TrafficMapApp() {
       </header>
       <main className="flex-1 overflow-hidden">
         <div className="container mx-auto px-4 py-8">
-          <Tabs
-            value={viewMode}
-            onValueChange={(value: "grid" | "list") => setViewMode(value)}
-          >
+          <Tabs value={viewMode} onValueChange={(value) => setViewMode(value)}>
             <div className="flex justify-between items-center mb-4">
               <TabsList>
                 <TabsTrigger value="grid">
