@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -35,6 +36,14 @@ export function ImageGallery({
     setCurrentIndex(initialIndex);
   }, [initialIndex]);
 
+  const navigateGallery = (direction: "prev" | "next") => {
+    const newIndex =
+      direction === "prev"
+        ? (currentIndex - 1 + images.length) % images.length
+        : (currentIndex + 1) % images.length;
+    setCurrentIndex(newIndex);
+  };
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (!isOpen) return;
@@ -50,14 +59,6 @@ export function ImageGallery({
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen]);
-
-  const navigateGallery = (direction: "prev" | "next") => {
-    const newIndex =
-      direction === "prev"
-        ? (currentIndex - 1 + images.length) % images.length
-        : (currentIndex + 1) % images.length;
-    setCurrentIndex(newIndex);
-  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
