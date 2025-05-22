@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TrafficMap
 
-## Getting Started
+Daily traffic-condition snapshots for Bucharest, served through a lightweight **Next.js** front-end and powered by an AWS Lambda + S3 grabber pipeline.
 
-First, run the development server:
+> Built to give commuters a quick, historical view of morning rush-hour congestion without having to open Google Maps live every single day.
+
+---
+
+## ✨ Features
+
+| Layer | What it does |
+|-------|--------------|
+| **AWS Lambda** | Runs at 8 am (Bucharest time), grabs a traffic-overlay screenshot from Google Maps Static API, and saves it to S3. |
+| **S3** | Stores screenshots in a S3 bucket (cheap and versioned). |
+| **Next.js / React** | Public site that lists days on a timeline and displays the screenshot in a responsive `<Image />` component. |
+| **Vercel** | Zero-config deployment with ISR (incremental static regeneration) so new screenshots appear minutes after Lambda finishes. |
+
+---
+
+## 🚀 Quick start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+# 1. Front-end
+git clone https://github.com/dekolor/trafficmap.git
+cd trafficmap
+pnpm install        # or npm / yarn
+pnpm dev            # http://localhost:3000
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# 2. Set environment variables
+# NEXT_PUBLIC_AWS_BUCKET_NAME
+# NEXT_PUBLIC_AWS_REGION
+# NEXT_PUBLIC_AWS_ACCESS_KEY_ID
+# NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY
+````
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🖼️ Sample UI
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![TrafficMap screenshot](docs/screenshot.png "Bucharest – 8 May 2025")
